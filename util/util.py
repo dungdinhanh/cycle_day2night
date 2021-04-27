@@ -101,3 +101,16 @@ def mkdir(path):
     """
     if not os.path.exists(path):
         os.makedirs(path)
+
+
+def transform_image(image, ttype='rotation'):
+    if ttype == 'flipping':
+       image_1 = image.flip(2)
+       image_2 = image.flip(3)
+       image_3 = image.flip(2).flip(3)
+       return image_1, image_2, image_3
+    elif ttype == 'rotation':
+       image_1 = image.transpose(2, 3).flip(2)
+       image_2 = image.flip(2).flip(3)
+       image_3 = image.transpose(2, 3).flip(3)
+       return image_1, image_2, image_3
