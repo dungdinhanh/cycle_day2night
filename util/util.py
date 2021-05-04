@@ -102,8 +102,9 @@ def mkdir(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
+import random
 
-def transform_image(image, ttype='rotation'):
+def transform_image(image, ttype='random'):
     if ttype == 'flipping':
        image_1 = image.flip(2)
        image_2 = image.flip(3)
@@ -114,3 +115,17 @@ def transform_image(image, ttype='rotation'):
        image_2 = image.flip(2).flip(3)
        image_3 = image.transpose(2, 3).flip(3)
        return image_1, image_2, image_3
+    elif ttype == 'random':
+        rf = random.uniform(0, 1)
+        if rf < 0.2:
+            image_1 = image.flip(2)
+            image_2 = image.flip(3)
+            image_3 = image.flip(2).flip(3)
+            return image_1, image_2, image_3
+        else:
+            image_1 = image.transpose(2, 3).flip(2)
+            image_2 = image.flip(2).flip(3)
+            image_3 = image.transpose(2, 3).flip(3)
+            return image_1, image_2, image_3
+
+

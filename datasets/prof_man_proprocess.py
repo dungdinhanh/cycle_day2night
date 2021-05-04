@@ -3,7 +3,7 @@ import os
 import glob
 
 if __name__ == '__main__':
-    folder = "data/collected_data"
+    folder = "data/grass_day"
     new_folder = "data/pm_preprocessed"
     os.makedirs(new_folder, exist_ok=True)
     files_name = glob.glob(os.path.join(folder, "*.jpg"))
