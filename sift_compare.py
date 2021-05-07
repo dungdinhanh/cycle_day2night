@@ -41,6 +41,7 @@ def number_matches(file1, file2, threshold=0.7):
 import argparse
 import glob
 import pandas as pd
+import os
 parser = argparse.ArgumentParser("SIFT compares")
 parser.add_argument("--input_gr", default="results/groundtruth_night", type=str, help="Input folder (inside folder is images")
 parser.add_argument("--input_gen", default="results/abcxyz/", type=str, help="Input generated folder")
@@ -48,11 +49,11 @@ parser.add_argument("--output_file", default="temp.csv", type=str, help="output 
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    list_images_gr = glob.glob(args.input_gr)
-    list_images_gen = glob.glob(args.input_gen)
+    list_images_gr = list(glob.glob(os.path.join(args.input_gr, "*.png")))
+    list_images_gen = list(glob.glob(os.path.join(args.input_gen, "*.png")))
 
-    sorted(list_images_gr)
-    sorted(list_images_gen)
+    list_images_gr = sorted(list_images_gr)
+    list_images_gen = sorted(list_images_gen)
 
     n = len(list_images_gr)
     m = len(list_images_gen)
@@ -68,7 +69,7 @@ if __name__ == '__main__':
     # counts = np.asarray(counts)
     # len_matches = np.asarray(len_matches)
     matrix = [counts, len_matches]
-    matrix = np.asarray(matrix)
+    matrix = np.transpose(np.asarray(matrix))
     dt_fr = pd.DataFrame(matrix, columns=["counts", "matches"])
     dt_fr.to_csv(args.output_file)
 
